@@ -3,24 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzeria Da Franco</title>
+    <title>Buscador de Pokemones</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Lilita+One&display=swap');
+  </style>
 </head>
 <body>
     <div class="hero">
-       <h1 >Pizzeria Da Franco</h1>
-       <h2 >Verdadera Pizza italiana</h2>
+       <img src="Assets/pokemonLOGO.png" alt="pokemon logo">
     </div>
         <form id="form">
-            <input type="number" name="pizzaID" id="input-number" placeholder="Buscar pizza ID" >
+            <input type="number" name="pokemonID" id="input-number" placeholder="Busca tu pokemon" >
             <input type="submit" value= "Buscar" id="submit-btn">
         </form>
         
   
     <div id="container">
-        <p class="error" id="error"></p>
+        <!-- <div class="card-container">
+            <img src="Assets/lupa.svg" alt="">
+            <h2 class="name">Name</h2>
+            <div class="descripcion">
+                <p class="descripcion-title">Tipo principal: <span class="type">Agua</span></p>
+                <p class="descripcion-title">Medida: <span class="height">10 cm</span></p>
+                <p class="descripcion-title">Peso: <span class="weight">10 kg</span></p>
+            </div>
+
+            <div class="card-container">
+                <h2 class="error">No se encuentra su pokemón</h2>
+                
+                </div>
+            
+        </div> -->
     </div>
- 
+
+    <script src="request.js"></script>
     <script src="index.js"></script>
 </body>
 </html>

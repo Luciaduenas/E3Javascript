@@ -1,132 +1,77 @@
-const pizzas = [
-  {
-    id: 1,
-    nombre: "pizza de Muzzarella",
-    precio: 500,
-    ingredientes: ["Muzzarella", "Tomate", "Aceitunas"],
-    imagen: "./img/muzzarella.png",
-  },
-
-  {
-    id: 2,
-    nombre: "pizza de Cebolla",
-    precio: 1500,
-    ingredientes: ["Muzzarella", "Tomate", "Cebolla"],
-    imagen: "./img/cebolla.png",
-  },
-
-  {
-    id: 3,
-    nombre: "pizza 4 Quesos",
-    precio: 1380,
-    ingredientes: [
-      "Muzzarella",
-      "Tomate",
-      "Queso Azul",
-      "Parmesano",
-      "Roquefort",
-    ],
-    imagen: "./img/4quesos.png",
-  },
-
-  {
-    id: 4,
-    nombre: "pizza Especial",
-    precio: 1000,
-    ingredientes: ["Muzzarella", "Tomate", "Rucula", "Jamón"],
-    imagen: "./img/especial.png",
-  },
-
-  {
-    id: 5,
-    nombre: "pizza con Anana",
-    precio: 600,
-    ingredientes: ["Muzzarella", "Tomate", "Anana"],
-    imagen: "./img/anana.png",
-  },
-];
-
-// Declaro los elementos del HTML
 const form = document.getElementById("form")
-const container = document.getElementById("container")
-const error = document.getElementById("error")
 const inputNumber = document.getElementById("input-number")
+const cardContainer = document.getElementById ("container")
 
+// Creo un funcion para adaptar los datos que necesito
 
-const init =() => {
-  document.addEventListener("DOMContentLoaded", recuperarPizza)
-  form.addEventListener("submit", searchPizza);
-}
-
-// Guardar en local storage la pizza buscada
-const saveToLocalStorage = (last) =>{
-  localStorage.setItem("ultimoItem", JSON.stringify(last));
-};
-
-// Declaro una constante de ultimoItem para poder renderizarlo, traigo el dato del local storage
-const ultimoItem = JSON.parse (localStorage.getItem("ultimoItem"))
-
-// Esta función indica que si hay un ultimoItem guardado lo renderice
-const recuperarPizza = () =>{
-  if (ultimoItem) {
-    container.innerHTML =`<div id="card-container"><h3 class="nombre"><span>#${ultimoItem.id}</span>${ultimoItem.nombre}</h3>
-        
-    <div class="pizzaImgContainer"><img src="${ultimoItem.imagen}" alt=""></div>
-    <p class="ingredientes">${ultimoItem.ingredientes}</p>
-    <h3 class="precio">${ultimoItem.precio}</h3></div>`
-    } else {
-      container.innerHTML =""
+const pokemonDataAdapter = (pokemon) =>{
+    return {
+        id: pokemon.id,
+        name: pokemon.name,
+        image: pokemon.sprites.other.home.front_default,
+        type: pokemon.types[0].type.name,
+        height: pokemon.height / 10,
+        weight: pokemon.weight / 10
     }
 }
 
-// Creo una constante donde pizza es igual a "buscar en pizza la pizza cuyo ID sea igual al input value, es decir al inputNumber" 
-// Despues lo meto dentro de search pizza, transformandolo en una funcion
+// Creo la funcion para crear el html de la card
 
-const searchPizza = (e) =>{
-  e.preventDefault()
+const createCardTemplate = (pokemon) =>
+{ const {id, name, image,type, height,weight} = pokemonDataAdapter (pokemon);
+return ` <div class="card-container">
+<img src="${image}" alt="">
+<h2 class="name">${name}</h2>
+<div class="descripcion">
+    <p class="descripcion-title">Tipo principal: <span class="type">${type}</span></p>
+    <p class="descripcion-title">Medida: <span class="height">${height} cm</span></p>
+    <p class="descripcion-title">Peso: <span class="weight">${weight} kg</span></p>
+</div>
 
-  // aca valido que no se ingrese datos vacíos
-  if(inputNumber.value ==""){
-    container.innerHTML=`<div id="card-container">
-    <p class="error" id="error"> Por favor ingrese un número de ID</p>
 </div>`
-form.reset();
-  } else {
 
-    // Búsqueda de la ID de la pizza, va a retornar la info de la pizza seleccionada
-    const buscarID = (inputNumber) =>{
-      return pizzas.find ((pizza) => pizza.id == inputNumber.value )
-    }
+}
 
-    if (buscarID){
-      error.textContent=""
-      // Guardo la info de la pizza seleccionada para poder ingresarla como parametro en el renderizado.
-      let pizza = buscarID(inputNumber)
-      if (pizza) {
-      recuperarPizza(ultimoItem)
-      const createCard = (pizza) =>{
-        container.innerHTML =`<div id="card-container"><h3 class="nombre"><span>#${pizza.id}</span>${pizza.nombre}</h3>
-        
-        <div class="pizzaImgContainer"><img src="${pizza.imagen}" alt=""></div>
-        <p class="ingredientes">${pizza.ingredientes}</p>
-        <h3 class="precio">${pizza.precio}</h3></div>`
-        }
-        createCard (pizza)
-        saveToLocalStorage(pizza)
-        form.reset();
-      
-    } else {
-      container.innerHTML=`<div id="card-container">
-      <p class="error" id="error"> No existe una pizza con ese ID</p>
-  </div>`
-  form.reset();
+// Funcion para renderizar la card
+const renderCard =(pokemon) =>{
+    cardContainer.innerHTML = createCardTemplate(pokemon);
+}
 
-      
-    }
+// Chequea que el input no este vacio
+const isEmptyInput = (inputNumber) =>{
+    return !inputNumber.value.trim().length;
+} 
 
-    }}
-  }
-
+//chequea que el input ingresado corresponde a un pokemon id
+// const isInValidPokemon = (fetchedPokemon) =>{
+//     return !fetchedPokemon.id;
+// }
  
+// funcion que consulta el pokemon en la api
+const searchPokemon = async (e) => {
+    e.preventDefault()
 
-init ()
+    if (isEmptyInput(inputNumber)) {
+        cardContainer.innerHTML= `<div class="error-container"><img src="Assets/pikachu.png" alt="error 404 not found"><h2 class="error">Por favor ingrese un número de Pokemon</h2></div>`
+        return;
+    }
+    
+    const fetchedPokemon = await getPokemon (inputNumber.value)
+
+    if(fetchedPokemon){
+        renderCard(fetchedPokemon)
+        form.reset()
+     return;
+    } else {
+        cardContainer.innerHTML= `<div class="error-container"><img src="Assets/not found.png" alt="error 404 not found"><h2 class="error"><span>ERROR 404</span> "Not Found" No existe un pokemon con ese id</h2></div>`
+        form.reset()
+        return;  
+    }
+    }
+
+
+init =()=>{
+    form.addEventListener("submit", searchPokemon)
+}
+
+init()

@@ -6,6 +6,7 @@
     box-sizing: border-box;
     text-decoration: none;
     font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Lilita One', cursive;
 }
 
 body{
@@ -13,8 +14,8 @@ body{
     flex-direction: column;
     align-items: center;
     width: 100%;
-    background-image:url("./img/fondo2.jpeg");
-    background-size: cover;
+    background-color: #000000;
+
 }
 
 .hero{
@@ -23,20 +24,10 @@ body{
     width: 100%;
 }
 
-.hero h1 {
-    font-family: 'Caveat', cursive;
-    color: white;
-    text-shadow: #000000 4px 5px;
-    font-size: 80px;
-    font-style: italic;
-
+.hero img{
+    width: 50%;
 }
 
-.hero h2{
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 24px;
-    color: #ffffff;
-}
 
 #form{
     display: flex;
@@ -47,26 +38,30 @@ body{
 
 #input-number{
     font-size: 18px;
+    color: #000000;
+    background-color: rgb(255, 217, 0);
     align-items: center;
     align-content: center;
     text-align: center;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid grey;
+    border: 1px solid rgb(85, 102, 233);
+}
+
+#input-number::placeholder{
+    color: rgb(85, 102, 233);
 }
 
 #submit-btn{
     color: rgb(255, 255, 255);
-    background-color: #ff4545;
+    background-color: rgb(85, 102, 233);
     padding: 5px 10px;
     border-radius: 10px;
-    border: none;
     font-size: 18px;
     font-weight: 600;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 #submit-btn:hover {
-    background-color: #ff8b8b;
+    background-color: rgb(14, 37, 209);
   }
   
 #container{
@@ -75,72 +70,88 @@ body{
     padding: 30px;
 }
 
-.ultima{
-    color: white;
-    text-align: center;
-    font-size: 24px;
-    padding: 10px;
-}
-
-#card-container{
+.card-container{
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #ffffff;
+    background-color: #f1f1f1;
     padding: 15px;
-    gap: 5px;
-    width: fit-content;
+    gap: 10px;
     border-radius: 5px;
-    box-shadow:rgba(0, 0, 0, 1) 10px 10px 20px;;
+    box-shadow:rgb(255, 255, 255) 2px 2px 20px;;
 }
 
-.nombre {
+.card-container img{
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+.name{
+    font-size: 40px;
+    font-family: "Lilita One";
+    font-weight: 800;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    color: rgb(85, 102, 233);
+}
+
+.descripcion {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    gap: 5px;
+}
+
+.descripcion-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 14px;
+    color: rgb(117, 132, 246);;
+}
+
+.descripcion-title span{
+    font-weight: 900;
+    font-size: 16px;
+    color:  rgb(85, 102, 233);
+}
+
+
+
+.error-container{
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
-    color: #ff4545;
-    font-family: 'Caveat', cursive;
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+    gap: 10px;
+    border-radius: 5px;
+    box-shadow:rgb(255, 255, 255) 2px 2px 20px;;
 }
 
-.nombre span{
-    font-family: 'Caveat', cursive;
-    font-size: 16px;
-    
-    color: #000000;
-}
-
-.pizzaImgContainer img{
-    width: 200x;
-    height: 200px;
-    border-radius: 10px;
-    border:#ffffff 2px solid;
-    box-shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;;
-}
-
-.ingredientes{
-    max-width: 200px;
-    font-size: 14px;
-    text-overflow: ellipsis;
-    text-align: center;
-    font-style: italic;
-    color: #ff8b8b
-}
-
-.precio {
-    text-align: center;
-    color: #000000;
-    font-size: 20px;
+.error-container img{
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
 }
 
 .error {
-    color: #ff4545;
-    font-style: italic;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    font-family: "Lilita One";
+    font-weight: 800;
+    text-overflow: ellipsis;
+    color: rgb(214, 45, 29);
     text-align: center;
 }
 
-.hidden {
-    visibility: hidden;
+.error span {
+    font-size: 30px;
 }
+
